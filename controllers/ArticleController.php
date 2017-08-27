@@ -26,6 +26,24 @@ class ArticleController extends yii\web\Controller
         ];
     }
 
+
+    public function actions()
+    {
+        return [
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetAction',
+                'url' => \Yii::$app->controller->module->allRedactorImageUrl, // Directory URL address, where files are stored.
+                'path' => \Yii::$app->controller->module->redactor_upload_path_alias, // Or absolute path to directory where files are stored.
+                'type' => \vova07\imperavi\actions\GetAction::TYPE_IMAGES,
+            ],
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadAction',
+                'url' => \Yii::$app->controller->module->redactorImageUrl, // Directory URL address, where files are stored.
+                'path' => \Yii::$app->controller->module->redactorPath, // Or absolute path to directory where files are stored.
+            ],
+        ];
+    }
+
     /**
      * Lists all Article models.
      * @return mixed

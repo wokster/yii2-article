@@ -9,7 +9,7 @@ use \dosamigos\fileinput\FileInput;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="article-form">
-
+<pre><?php print_r(Yii::$app->modules['article']->imagePath);?></pre>
     <?php $form = ActiveForm::begin([
         'options' => ['enctype'=>'multipart/form-data'],
       'enableClientValidation' => false
@@ -21,18 +21,32 @@ use \dosamigos\fileinput\FileInput;
  ?>
 
 	        <?=  $form->field($model, 'text',['options'=>['class'=>'col-xs-12']])->widget(\vova07\imperavi\Widget::className(),[
-                'settings' => [
-                    'lang' => 'ru',
-                    'minHeight' => 200,
-                    'pastePlainText' => true,
-                    'imageUpload' => \yii\helpers\Url::to(['/main/image/save-redactor-img','id'=>null,'sub'=>'article']),
-                    'replaceDivs' => false,
-                    'plugins' => [
-                        'fullscreen',
-                        'table'
-                    ]
-                ]
-            ])
+              'settings' => [
+                  'lang' => 'ru',
+                  'minHeight' => 200,
+                  'pastePlainText' => true,
+                  'imageUpload' => \yii\helpers\Url::toRoute(['/article/article/image-upload']),
+                  'imageManagerJson' => \yii\helpers\Url::toRoute(['/article/article/images-get']),
+                  'replaceDivs' => false,
+                  'formattingAdd' => [
+                      [
+                          'tag' => 'p',
+                          'title' => 'text-success',
+                          'class' => 'text-success'
+                      ],
+                      [
+                          'tag' => 'p',
+                          'title' => 'text-danger',
+                          'class' => 'text-danger'
+                      ],
+                  ],
+                  'plugins' => [
+                      'fullscreen',
+                      'table',
+                      'imagemanager'
+                  ]
+              ]
+          ])
  ?>
   <div class="row">
   <div class="col-xs-8">
@@ -41,6 +55,7 @@ use \dosamigos\fileinput\FileInput;
     <?= $form->field($model, 'date_create', ['options'=>['class'=>'col-xs-12']])->widget(\kartik\datecontrol\DateControl::className(),[]) ?>
 
     <?= $form->field($model, 'type_id', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12']])->dropDownList($model::getTypeList()) ?>
+    <?= $form->field($model, 'new_tags', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12']])->widget(\wokster\tags\TagsInputWidget::className()) ?>
   </div>
   <div class="col-xs-4">
     <?= $form->field($model, 'file', ['options'=>['class'=>'col-xs-12']])->label(false)->widget(FileInput::className(),[

@@ -2,8 +2,9 @@
 
 namespace wokster\article\models;
 
-use wokster\status\ImageUploadBehavior;
-use wokster\status\StatusBehavior;
+use wokster\behaviors\ImageUploadBehavior;
+use wokster\behaviors\StatusBehavior;
+use wokster\tags\TagsBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\StringHelper;
@@ -48,9 +49,10 @@ class Article extends \yii\db\ActiveRecord
             ],
             'image' => [
                 'class' => ImageUploadBehavior::className(),
-                'dir_name' => 'article',
                 'attribute' => 'image',
                 'random_name' => 'true',
+                'image_path' => Yii::$app->modules['article']->imagePath,
+                'image_url' => Yii::$app->modules['article']->imageUrl,
             ],
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
@@ -59,6 +61,9 @@ class Article extends \yii\db\ActiveRecord
             ],
             'seo' => [
                 'class' => \wokster\seomodule\SeoBehavior::className(),
+            ],
+            'tags' => [
+                'class' => TagsBehavior::className(),
             ],
         ];
     }

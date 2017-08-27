@@ -13,10 +13,11 @@
     "require": {
         "yiisoft/yii2": "~2.0.0",
         "wokster/yii2-seo-module": "*",
+        "wokster/yii2-tags-module": "*",
         "wokster/yii2-fontawesome-dropdown-widget": "*",
         "kartik-v/yii2-widget-activeform": "@dev",
         "kartik-v/yii2-widget-fileinput": "@dev",
-        "wokster/yii2-status-behavior": "dev-master",
+        "wokster/yii2-wokster-behaviors": "*",
         "2amigos/yii2-file-input-widget": "~1.0",
         "kartik-v/yii2-datecontrol": "*",
         "kartik-v/yii2-widget-datetimepicker": "*",
