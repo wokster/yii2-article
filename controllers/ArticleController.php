@@ -105,11 +105,7 @@ class ArticleController extends yii\web\Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if(Yii::$app->request->post('toview',false)){
-                return $this->redirect(['view', 'id' => $model->id]);
-            }else{
-                return $this->redirect(['update', 'id' => $model->id]);
-            }
+            return $this->redirect(['update', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

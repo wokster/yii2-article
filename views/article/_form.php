@@ -9,7 +9,6 @@ use \dosamigos\fileinput\FileInput;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="article-form">
-<pre><?php print_r(Yii::$app->modules['article']->imagePath);?></pre>
     <?php $form = ActiveForm::begin([
         'options' => ['enctype'=>'multipart/form-data'],
       'enableClientValidation' => false

@@ -27,7 +27,6 @@ class Article extends \yii\db\ActiveRecord
 {
     public $file;
 
-
     /**
      * @inheritdoc
      */
