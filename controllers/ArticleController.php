@@ -76,9 +76,11 @@ class ArticleController extends yii\web\Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($type=null)
     {
         $model = new Article();
+        if(is_numeric($type))
+            $model->type_id = $type;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if(Yii::$app->request->post('toview',false)){

@@ -10,7 +10,7 @@ use \dosamigos\fileinput\FileInput;
 ?>
 <div class="article-form">
     <?php $form = ActiveForm::begin([
-        'options' => ['enctype'=>'multipart/form-data'],
+      'options' => ['enctype'=>'multipart/form-data'],
       'enableClientValidation' => false
     ]); ?>
 
@@ -53,7 +53,7 @@ use \dosamigos\fileinput\FileInput;
     ?>
     <?= $form->field($model, 'date_create', ['options'=>['class'=>'col-xs-12']])->widget(\kartik\datecontrol\DateControl::className(),[]) ?>
 
-    <?= $form->field($model, 'type_id', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12']])->dropDownList($model::getTypeList()) ?>
+    <?= $form->field($model, 'type_id', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12']])->dropDownList(Yii::$app->modules['article']->type_list) ?>
     <?= $form->field($model, 'new_tags', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12']])->widget(\wokster\tags\TagsInputWidget::className()) ?>
   </div>
   <div class="col-xs-4">
