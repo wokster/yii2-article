@@ -12,7 +12,7 @@ $this->title = 'статьи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 <?php BoxWidget::begin([
   'title'=>'статьи <small class="m-l-sm">записей '.$dataProvider->getCount().' из '.$dataProvider->getTotalCount().'</small>',
   'buttons' => [
