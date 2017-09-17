@@ -16,7 +16,7 @@ use \dosamigos\fileinput\FileInput;
 
           <?= $form->field($model, 'title', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12 col-md-6']])->textInput(['maxlength' => true]) ?>
 
-	        <?=  $form->field($model, 'url', ['addon' => ['prepend' => ['content' => '<i class="fa fa-globe"></i>']],'options'=>['class'=>'col-xs-12 col-md-6']])
+	        <?=  $form->field($model, 'url', ['addon' => ['prepend' => ['content' => '<i class="fa fa-globe"></i>']],'options'=>['class'=>'col-xs-12 col-md-6']])->widget(\wokster\behaviors\TranslitWidget::className())
  ?>
 
 	        <?=  $form->field($model, 'text',['options'=>['class'=>'col-xs-12']])->widget(\vova07\imperavi\Widget::className(),[

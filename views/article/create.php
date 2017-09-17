@@ -26,14 +26,4 @@ $this->params['breadcrumbs'][] = $this->title;
          </div>
     </div>
 </div>
-<?=
-$this->registerJs("
-    $(function(){
-      $('#article-title').liTranslit({
-      elAlias: $('#article-url'),
-      caseType:	'lower',
-      });
-    })
-    ");
-?>
 
