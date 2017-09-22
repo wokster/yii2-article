@@ -27,14 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
     'filterModel' => $searchModel,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
+        ['class' => 'yii\grid\ActionColumn'],
         'id',
         'title',
         ['attribute'=>'url','format'=>'url', 'value'=>function($model){ return Yii::$app->frontUrlManager->createUrl(['/article/one','url'=>$model->url]);}],
         ['attribute' => 'status_id','label' => 'статус','filter'=> Yii::$app->modules['article']->status_list, 'value' => 'status'],
-        'image',
+        ['attribute' => 'image', 'value' => 'smallImage', 'format'=>'image'],
         'date_create:datetime',
         ['attribute' => 'type_id','label' => 'тип','filter'=> $searchModel->getTypeList(),'value' => 'typeName'],
-        ['class' => 'yii\grid\ActionColumn'],
+
     ],
 ]); ?>
 <?php Pjax::end();?>
