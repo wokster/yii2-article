@@ -7,7 +7,23 @@ use \dosamigos\fileinput\FileInput;
 /* @var $this yii\web\View */
 /* @var $model wokster\article\models\Article */
 /* @var $form yii\widgets\ActiveForm */
+
+if($model->hasErrors()):
+  \wokster\ltewidgets\BoxWidget::begin([
+      'solid'=>true,
+      'color'=>'danger',
+      'title'=>'Ошибки валидации',
+      'close'=> true,
+  ]);
+  $error_data = $model->firstErrors;
+  echo \yii\widgets\DetailView::widget([
+      'model'=>$error_data,
+      'attributes'=>array_keys($error_data)
+  ]);
+  \wokster\ltewidgets\BoxWidget::end();
+endif;
 ?>
+
 <div class="article-form">
     <?php $form = ActiveForm::begin([
       'options' => ['enctype'=>'multipart/form-data'],
@@ -42,7 +58,10 @@ use \dosamigos\fileinput\FileInput;
                   'plugins' => [
                       'fullscreen',
                       'table',
-                      'imagemanager'
+                      'imagemanager',
+                      'fontcolor',
+                      'fontsize',
+                      'video'
                   ]
               ]
           ])
@@ -51,9 +70,17 @@ use \dosamigos\fileinput\FileInput;
   <div class="col-xs-8">
     <?=  $form->field($model, 'status_id',['options'=>['class'=>'col-xs-12']])->dropDownList(Yii::$app->modules['article']->status_list)
     ?>
-    <?= $form->field($model, 'date_create', ['options'=>['class'=>'col-xs-12']])->widget(\kartik\datecontrol\DateControl::className(),[]) ?>
 
     <?= $form->field($model, 'type_id', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12']])->dropDownList(Yii::$app->modules['article']->type_list) ?>
+
+    <div class="<?= ($model->type_id == \wokster\article\Article::TYPE_PAGE)?' hidden':''?>" id="start-date-div">
+      <?= $form->field($model, 'date_start', ['options'=>['class'=>'col-xs-12']])->widget(\kartik\datecontrol\DateControl::className(),[]) ?>
+    </div>
+
+    <div class="<?= ($model->type_id == \wokster\article\Article::TYPE_SALE)?'':' hidden'?>" id="sale-date-div">
+      <?= $form->field($model, 'date_finish', ['options'=>['class'=>'col-xs-12']])->widget(\kartik\datecontrol\DateControl::className(),[]) ?>
+    </div>
+
     <?= $form->field($model, 'new_tags', ['addon' => ['prepend' => ['content' => '<i class="fa fa-pencil"></i>']],'options'=>['class'=>'col-xs-12']])->widget(\wokster\tags\TagsInputWidget::className()) ?>
   </div>
   <div class="col-xs-4">
@@ -64,12 +91,6 @@ use \dosamigos\fileinput\FileInput;
         'thumbnail' => '<img src="'.$model->getImage().'" />',
         'style' => FileInput::STYLE_IMAGE
     ]);?>
-  </div>
-  </div>
-  <div class="row">
-  <div class="<?= ($model->type_id == \wokster\article\Article::TYPE_SALE)?'':' hidden'?>" id="sale-date-div">
-    <?= $form->field($model, 'date_start', ['options'=>['class'=>'col-xs-12 col-sm-6']])->widget(\kartik\datecontrol\DateControl::className(),[]) ?>
-    <?= $form->field($model, 'date_finish', ['options'=>['class'=>'col-xs-12 col-sm-6']])->widget(\kartik\datecontrol\DateControl::className(),[]) ?>
   </div>
   </div>
   <?= \wokster\seomodule\SeoFormWidget::widget(['model'=>$model,'form'=>$form]);?>
@@ -83,12 +104,17 @@ use \dosamigos\fileinput\FileInput;
   <?php ActiveForm::end(); ?>
 </div>
 <?php $this->registerJs("
-$('#article-type_id').on('change',function(){
-var type = $(this).val();
-if(type == ".\wokster\article\Article::TYPE_SALE."){
-  $('#sale-date-div').removeClass('hidden');
-}else{
-  $('#sale-date-div').addClass('hidden');
-}
-});
+  $('#article-type_id').on('change',function(){
+  var type = $(this).val();
+    if(type == ".\wokster\article\Article::TYPE_SALE."){
+      $('#sale-date-div').removeClass('hidden');
+      $('#start-date-div').removeClass('hidden');
+    }else if(type == ".\wokster\article\Article::TYPE_NEWS."){
+      $('#sale-date-div').addClass('hidden');
+      $('#start-date-div').removeClass('hidden');
+    }else{
+      $('#sale-date-div').addClass('hidden');
+      $('#start-date-div').addClass('hidden');
+    }
+  });
 ");
