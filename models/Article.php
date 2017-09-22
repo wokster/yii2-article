@@ -52,6 +52,11 @@ class Article extends \yii\db\ActiveRecord
                 'random_name' => 'true',
                 'image_path' => Yii::$app->modules['article']->imagePath,
                 'image_url' => Yii::$app->modules['article']->imageUrl,
+                'size_for_resize' => [
+                                [640,480,true],
+                                [640,null,false],
+                                [50,50,true]
+                                ]
             ],
             'timestamp' => [
                 'class' => TimestampBehavior::className(),
